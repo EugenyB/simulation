@@ -6,6 +6,7 @@ public class Pole implements Runnable {
     private final int row;
     private final int column;
     private final double p;
+    private boolean active;
 
     public Pole(int k, double p, int row, int column) {
         MyRandom random = MyRandom.getInstance();
@@ -15,6 +16,7 @@ public class Pole implements Runnable {
         this.column = column;
         this.p = p;
         color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+        active = true;
     }
 
     public void draw(SimulationPanel panel, Graphics graphics) {
@@ -42,15 +44,34 @@ public class Pole implements Runnable {
                 Thread.sleep(delay);
                 MyRandom random = MyRandom.getInstance();
                 double v = random.nextDouble();
+                Simulation simulation = SimulationPanel.getPanel().getSimulation();
+                if (simulation==null || !active) continue;
                 if (v<=p) {
-                    color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+                    color = simulation.getRandomColor();
                 } else {
                     // todo change color with neighbours
+                    color = simulation.getNewColor(row, column);
                 }
                 SimulationPanel.getPanel().repaint();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void toggleActive() {
+        active = !active;
     }
 }
