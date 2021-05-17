@@ -1,13 +1,46 @@
 import java.awt.*;
 
+/**
+ * Pole - cell for simulation
+ */
 public class Pole implements Runnable {
+    /**
+     * current color of pole
+     */
     private Color color;
+
+    /**
+     * delay for simulation
+     */
     private final int delay;
+
+    /**
+     * row of pole
+     */
     private final int row;
+
+    /**
+     * column of pole
+     */
     private final int column;
+
+    /**
+     * probability of color change for simulation
+     */
     private final double p;
+
+    /**
+     * state of pole's activity. If false - not changing color and not implies color change for neighbours
+     */
     private boolean active;
 
+    /**
+     * Creates Pole
+     * @param k delay / speed
+     * @param p probability for change color
+     * @param row row of pole
+     * @param column column of pole
+     */
     public Pole(int k, double p, int row, int column) {
         MyRandom random = MyRandom.getInstance();
         double v = random.nextDouble() + 0.5;
@@ -19,8 +52,12 @@ public class Pole implements Runnable {
         active = true;
     }
 
+    /**
+     * Paints pole in panel of simulation
+     * @param panel simulaion panel
+     * @param graphics graphic context
+     */
     public void draw(SimulationPanel panel, Graphics graphics) {
-
         int width = panel.getWidth();
         int height = panel.getHeight();
         int m = panel.getSimulation().getM(); // columns
@@ -37,6 +74,9 @@ public class Pole implements Runnable {
         graphics.fillRect(left,top, size, size);
     }
 
+    /**
+     * Main method for running in thread
+     */
     @Override
     public void run() {
         try {
@@ -49,7 +89,6 @@ public class Pole implements Runnable {
                 if (v<=p) {
                     color = simulation.getRandomColor();
                 } else {
-                    // todo change color with neighbours
                     color = simulation.getNewColor(row, column);
                 }
                 SimulationPanel.getPanel().repaint();
@@ -59,18 +98,25 @@ public class Pole implements Runnable {
         }
     }
 
+    /**
+     * gets color of pole
+     * @return color of pole
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * checks if pole is active
+     * @return true if pole is active
+     */
     public boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
+    /**
+     * toggles active state of pole
+     */
     public void toggleActive() {
         active = !active;
     }

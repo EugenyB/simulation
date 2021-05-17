@@ -1,17 +1,24 @@
 import java.awt.*;
 
+/**
+ * Simulation class
+ * Contains poles, performs simulation process
+ */
 public class Simulation {
-    private Pole[][] poles;
-    private int k;
-    private int n;
-    private int m;
-    private double p;
+    private final Pole[][] poles;
+    private final int n;
+    private final int m;
 
+    /**
+     * Creates Simulation
+     * @param n number of rows in simulation
+     * @param m number of column in simulation
+     * @param k delay / speed of simulation
+     * @param p probability for change color of pole
+     */
     public Simulation(int n, int m, int k, double p) {
         this.n = n;
         this.m = m;
-        this.k = k;
-        this.p = p;
         poles = new Pole[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -25,34 +32,49 @@ public class Simulation {
         }
     }
 
+    /**
+     * Gets array of poles for simulation
+     * @return
+     */
     public Pole[][] getPoles() {
         return poles;
     }
 
-    public void setPoles(Pole[][] poles) {
-        this.poles = poles;
-    }
-
-    public void setSpeed(int k) {
-        this.k = k;
-    }
-
+    /**
+     * gets number of rows in simulation
+     * @return number of rows
+     */
     public int getN() {
         return n;
     }
 
+    /**
+     * gets number of columns in simulation
+     * @return number of columns
+     */
     public int getM() {
         return m;
     }
 
+    /**
+     * Repaints simulation
+     * @param panel panel for repaint this simulation
+     * @param g graphic context for repaint
+     */
     public void repaint(SimulationPanel panel, Graphics g) {
-        for (int i = 0; i < poles.length; i++) {
-            for (int j = 0; j < poles[i].length; j++) {
-                poles[i][j].draw(panel, g);
+        for (Pole[] pole : poles) {
+            for (Pole value : pole) {
+                value.draw(panel, g);
             }
         }
     }
 
+    /**
+     * Main part of simulation - calculates average color of neighbours
+     * @param row row of pole
+     * @param column column of pole
+     * @return new color for pole object
+     */
     public synchronized Color getNewColor(int row, int column) {
         float[] avg = new float[3];
         int count = 0;
@@ -98,11 +120,20 @@ public class Simulation {
         }
     }
 
+    /**
+     * Gets random color for pole
+     * @return generated random new color
+     */
     public synchronized Color getRandomColor() {
         MyRandom random = MyRandom.getInstance();
         return new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
     }
 
+    /**
+     * Toggles active state of pole as thread
+     * @param row row of pole
+     * @param column column of pole
+     */
     public synchronized void toggleActive(int row, int column) {
         poles[row][column].toggleActive();
     }
