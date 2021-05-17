@@ -25,7 +25,7 @@ public class MyRandom {
 
     /**
      * method for access one instance of MyRandom
-     * @return
+     * @return myRandom object
      */
     public static MyRandom getInstance() {
         return instance;
