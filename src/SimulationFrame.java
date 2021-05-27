@@ -22,9 +22,6 @@ public class SimulationFrame extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
 
         jButton1 = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,14 +48,6 @@ public class SimulationFrame extends javax.swing.JFrame {
 
         simulationPanel = new SimulationPanel();
         getContentPane().add(simulationPanel);
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
 
         pack();
     }
@@ -119,9 +108,6 @@ public class SimulationFrame extends javax.swing.JFrame {
     private SimulationPanel simulationPanel;
 
     private javax.swing.JButton jButton1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
